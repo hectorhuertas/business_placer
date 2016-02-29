@@ -1,4 +1,28 @@
 <div class="container">
   <br>
   <h1>Yelp to Maps</h1>
-</div>
+  <!-- <div id="map-container">
+    <div id="map-canvas"></div>
+  </div> -->
+  <div id="map"></div>
+      <script>
+        function initMap() {
+          var locations = <%= @locations %>;
+          var location = <%= @locations[3] %>;
+          // var myLatLng = {lat: 39.736963, lng: -104.996159};
+          var myLatLng = {lat: location[0], lng: location[1]};
+
+          var map = new google.maps.Map(document.getElementById('map'), {
+            center: myLatLng,
+            zoom: 15
+          });
+
+          var marker = new google.maps.Marker({
+            position: myLatLng,
+            map: map,
+            title: 'Hello World!'
+          });
+        }
+      </script>
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDofWGkiRsM6CEp4yNX1wNMFuypbGKzIiE&callback=initMap"
+      async defer></script></div>
