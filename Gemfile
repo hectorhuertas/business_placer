@@ -13,8 +13,8 @@ gem 'bootstrap', '~> 4.0.0.alpha3'
 gem 'figaro'
 gem 'rails_12factor', group: :production
 gem "omniauth-google-oauth2"
+gem 'yelp', require: 'yelp'
 gem 'responders'
-
 ## Dudas:
 gem 'puma'
 
