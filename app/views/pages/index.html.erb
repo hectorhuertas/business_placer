@@ -1,64 +1,6 @@
 <br>
 <div class="container">
-  <div class="card text-xs-center">
-    <div class="card-block">
-      <form class="row" action="index.html" method="post">
-        <div class="col-xs-5">
-          <div class="form-group row">
-            <label for="inputPassword3" class="col-xs-2 form-control-label">Place</label>
-            <div class="col-xs-10">
-              <input type="text" class="form-control" id="exampleInputName2" placeholder="Business Type">
-            </div>
-          </div>
-        </div>
-        <div class="col-xs-5">
-          <div class="form-group row">
-            <label for="inputPassword3" class="col-xs-1 form-control-label">at</label>
-            <div class="col-xs-11">
-              <input type="text" class="form-control" id="exampleInputName2" placeholder="Location">
-            </div>
-          </div>
-        </div>
-        <div class="col-xs-2">
-          <button type="submit" class="btn btn-success">Place It!</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-<div class="container">
-  <div class="row">
-    <div class="col-xs-9">
-      <div class="card">
-        <%= render "shared/map" %>
-        <%#= image_tag "https://tctechcrunch2011.files.wordpress.com/2013/05/copy-of-sf-cards.png" , class:"img-fluid"%>
-      </div>
-    </div>
-    <div class="col-xs-3">
-      <div class="card" style="min-height:500px">
-        <div class="card-block">
-          Other Amazing Info
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="container">
-  <div class="card card-default">
-    <div class="card-block">
-      Individual info about each marker
-    </div>
-  </div>
-  <div class="card card-default">
-    <div class="card-block">
-      Individual info about each marker
-    </div>
-  </div>
-  <div class="card card-default">
-    <div class="card-block">
-      Individual info about each marker
-    </div>
+  <div class="jumbotron text-xs-center">
+    <%= link_to "Login with Google" , "/auth/google_oauth2", class:"btn btn-success"%>
   </div>
 </div>

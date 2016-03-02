@@ -12,6 +12,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'bootstrap', '~> 4.0.0.alpha3'
 gem 'figaro'
 gem 'rails_12factor', group: :production
+gem "omniauth-google-oauth2"
 
 ## Dudas:
 gem 'puma'
@@ -21,6 +22,9 @@ gem 'puma'
 
 group :development, :test do
   gem 'pry'
+  gem 'rspec-rails', '~> 3.0'
+  gem 'capybara'
+  gem 'launchy'
 end
 
 group :development do
