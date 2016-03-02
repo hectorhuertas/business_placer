@@ -1,13 +1,39 @@
   var map;
-  // var center = {lat: -34.397, lng: 150.644}
-  var center = {lat: 39.749, lng: -105.000}
+
   function initMap() {
-    var geocoder = new google.maps.Geocoder();
-    // var address = document.getElementById('address').value;
-    var address = "Alicante";
-    // geocoder.geocode( { 'address': address})
+    var turing = {lat: 39.749, lng: -105.000}
+
     map = new google.maps.Map(document.getElementById('map'), {
-      center: center,
+      center: turing,
       zoom: 10
     });
   }
+
+  function spike(){
+    var location = $('#location').val()
+    var geocoder = new google.maps.Geocoder();
+    geocoder.geocode({ 'address': location }, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        map.setCenter(results[0].geometry.location);
+        var marker = new google.maps.Marker({
+          map: map,
+          position: results[0].geometry.location
+        });
+      }
+    })
+  }
+
+  function place(){
+    // get markers
+
+    // get location
+
+    // recenter map
+
+    // draw markers
+  }
+
+
+  $(document).ready(function(){
+    $('#spike').on('click', spike)
+})
