@@ -1,10 +1,11 @@
 <nav class="navbar navbar-dark bg-success">
   <div class="container">
     <a class="navbar-brand" href="#">Business Placer</a>
-
-    <div class="nav navbar-nav pull-xs-right">
-      <a class="nav-item nav-link active" href="#">Hector</a>
-      <a class="nav-item nav-link" href="#">Logout</a>
-    </div>
+    <% if current_user %>
+      <div class="nav navbar-nav pull-xs-right">
+        <%= link_to current_user.name, "#", class:"nav-item nav-link active" %>
+        <%= link_to "Logout", logout_path, class:"nav-item nav-link" %>
+      </div>
+    <% end %>
   </div>
 </nav>
