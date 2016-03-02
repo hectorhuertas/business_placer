@@ -1,9 +1,9 @@
 class PagesController < ApplicationController
   def home
-    client = Yelp::Client.new({ consumer_key: "8GJM-0H6mq7kVlosVSi_mQ",
-                                consumer_secret: "7-MdCD1tNorjVvd8QPmWlYOsfCA",
-                                token: "MJgO4gOWRhXCJO-sc3VaDhY7-6HZ6-93",
-                                token_secret: "-R_u0OXCXJ1podILpIJhHWXT-KQ"
+    client = Yelp::Client.new({ consumer_key: "8GJM-XXXXXXXXXXX",
+                                consumer_secret: "7-MdXXXXXXXXXXXXXXX",
+                                token: "MJgO4XXXXXXXXXXXXXXXXXX",
+                                token_secret: "-R_u0OXXXXXXXXXXXXXXX"
                               })
     params = { term: '',
            category_filter: ''
