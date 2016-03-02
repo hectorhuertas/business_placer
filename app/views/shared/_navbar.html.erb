@@ -4,7 +4,7 @@
     <% if current_user %>
       <div class="nav navbar-nav pull-xs-right">
         <%= link_to current_user.name, "#", class:"nav-item nav-link active" %>
-        <%= link_to "Logout", "#", class:"nav-item nav-link" %>
+        <%= link_to "Logout", logout_path, class:"nav-item nav-link" %>
       </div>
     <% end %>
   </div>

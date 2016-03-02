@@ -13,4 +13,14 @@ RSpec.describe "Authentication", type: :feature do
       expect(page).to have_content "Logout"
     end
   end
+
+  describe "guest logout" do
+    it "returns to login page" do
+      visit root_path
+      click_on "Login with Google"
+
+      click_on "Logout"
+      expect(current_path).to eq(root_path)
+    end
+  end
 end

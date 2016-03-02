@@ -3,4 +3,5 @@ Rails.application.routes.draw do
 
   get '/placer', to: 'placer#show'
   get '/auth/google_oauth2/callback', to: "sessions#create"
+  get '/logout', to: "sessions#destroy"
 end
