@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  root 'pages#index'
+  root 'placer#show'
 
-  get '/placer', to: 'placer#show'
+  get '/login',                       to: "sessions#new"
+  get '/logout',                      to: "sessions#destroy"
   get '/auth/google_oauth2/callback', to: "sessions#create"
-  get '/logout', to: "sessions#destroy"
 end
