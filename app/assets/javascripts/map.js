@@ -33,7 +33,18 @@
     // draw markers
   }
 
+  function action(){
+    $.ajax({
+      type: 'GET',
+      url: '/jsoner.json',
+      success: function(data){
+        console.log(data)
+      }
+    })
+  }
+
 
   $(document).ready(function(){
     $('#spike').on('click', spike)
+    $('#action').on('click', action)
 })
