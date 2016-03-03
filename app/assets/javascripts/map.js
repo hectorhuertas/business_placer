@@ -25,6 +25,20 @@
       west: -105.035
     }
   });
+    var rectangle2 = new google.maps.Rectangle({
+    strokeColor: '#0000FF',
+    strokeOpacity: 0.8,
+    strokeWeight: 1,
+    fillColor: '#FF00FF',
+    fillOpacity: 0.35,
+    map: map,
+    bounds: {
+      north: 39.765,
+      south: 39.732,
+      east: -105.035,
+      west: -105.164
+    }
+  });
   }
 
   function recenter(){
