@@ -10,12 +10,12 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'bcrypt', '~> 3.1.7'
 gem 'bootstrap', '~> 4.0.0.alpha3'
+gem 'puma'
 gem 'figaro'
 gem 'rails_12factor', group: :production
 gem "omniauth-google-oauth2"
-
-## Dudas:
-gem 'puma'
+gem 'responders'
+gem 'yelp', require: 'yelp'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
