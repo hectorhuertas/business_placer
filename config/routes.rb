@@ -4,4 +4,12 @@ Rails.application.routes.draw do
   get '/login',                       to: "sessions#new"
   get '/logout',                      to: "sessions#destroy"
   get '/auth/google_oauth2/callback', to: "sessions#create"
+
+  namespace :api , defaults: {format: :json} do
+    namespace :v1 do
+      namespace :search do
+        get 'simple', to: "simple#index"
+      end
+    end
+  end
 end
