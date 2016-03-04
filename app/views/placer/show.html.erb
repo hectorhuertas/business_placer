@@ -1,26 +1,32 @@
 <br>
+<div class="container text-xs-center">
+<!-- <a id="spike" class="btn btn-success" href="#">Spike!</a> -->
+<a id="action" class="btn btn-success" href="#">Action!</a>
+</div>
+<br>
 <div class="container">
   <div class="card text-xs-center">
     <div class="card-block">
-      <form class="row" action="index.html" method="post">
+      <form id="place-it" class="row" action="index.html" method="post" data-remote="true">
         <div class="col-xs-5">
           <div class="form-group row">
-            <label for="inputPassword3" class="col-xs-2 form-control-label">Place</label>
+            <label for="keywords" class="col-xs-2 form-control-label">Place</label>
             <div class="col-xs-10">
-              <input type="text" class="form-control" id="exampleInputName2" placeholder="Business Type">
+              <input type="text" class="form-control" id="keywords" placeholder="Business Type">
             </div>
           </div>
         </div>
         <div class="col-xs-5">
           <div class="form-group row">
-            <label for="inputPassword3" class="col-xs-1 form-control-label">at</label>
+            <label for="location" class="col-xs-1 form-control-label">at</label>
             <div class="col-xs-11">
-              <input type="text" class="form-control" id="exampleInputName2" placeholder="Location">
+              <input type="text" class="form-control" id="location" placeholder="Location">
             </div>
           </div>
         </div>
         <div class="col-xs-2">
-          <button type="submit" class="btn btn-success">Place It!</button>
+          <!-- <a id="place-it" class="btn btn-success">Place It!</a> -->
+          <button id="pladdce-it" type="submit" class="btn btn-success">Place It!</button>
         </div>
       </form>
     </div>

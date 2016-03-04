@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-
 gem 'rails', '4.2.5'
 gem 'pg', '~> 0.15'
 gem 'sass-rails', '~> 5.0'
@@ -16,6 +15,7 @@ gem 'rails_12factor', group: :production
 gem "omniauth-google-oauth2"
 gem 'responders'
 gem 'yelp', require: 'yelp'
+gem 'simplecov'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

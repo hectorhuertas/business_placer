@@ -3,8 +3,6 @@ class Api::V1::Search::SimpleController < Api::ApiController
 
   def index
     finder = FinderService.new
-    b = finder.search("karaoke", "alicante")
-    respond_with b
-    # respond_with({bob: 'dope'})
+    respond_with finder.search(params[:keywords], params[:location])
   end
 end

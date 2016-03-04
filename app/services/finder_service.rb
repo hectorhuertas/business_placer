@@ -13,18 +13,12 @@ class FinderService
 
   def search(keywords, location)
     search = client.search(location, { term: keywords })
-
-    locations = search.businesses.map do |business|
-     {
-       lat: business.location.coordinate.latitude,
-       lng: business.location.coordinate.longitude
-     }
-    end
+    locations = locations_from(search)
 
     {
       total: search.total,
       count: locations.count,
-      locations: locations_from(search)
+      locations: locations
     }
   end
 
