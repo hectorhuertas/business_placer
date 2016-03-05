@@ -1,6 +1,7 @@
 class Api::V1::Neighborhoods::ResultsPerCapitaController < Api::ApiController
   respond_to :json
   def index
+    # binding.pry
     finder = FinderService.new
     @neighborhoods = Neighborhood.all.map do |n|
       location = "#{params[:location]} #{n.name}"
@@ -12,7 +13,6 @@ class Api::V1::Neighborhoods::ResultsPerCapitaController < Api::ApiController
         results_density: results[:total] / n.density
       }
     end.sort_by {|neighborhood| neighborhood[:results_density]}.take(20)
-    # binding.pry
     # b = {
     #   city: params[:location],
     #   location: "denver_coordinates",
