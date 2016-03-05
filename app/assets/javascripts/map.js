@@ -15,8 +15,19 @@ $(document).ready(function(){
 
 function placeIt(){
   recenterMap()
-  setMarkers()
+  // setMarkers
+    // llamar a la api-> devuelve x barrios
+    // cada barrio:
+      //get location con geocoder
+      //generar el marcador usando:
+        //localizacion
+        //nombre
+        //color dependiendo de la escala
 }
+// function placeIt(){
+//   recenterMap()
+//   setMarkers()
+// }
 
 function recenterMap(){
   var location = $('#location').val()
@@ -26,6 +37,15 @@ function recenterMap(){
        map.fitBounds(results[0].geometry.viewport)
      }
    })
+}
+
+function setMarkers(){
+  $.ajax({
+    action: 'GET',
+    url: '/api/v1/search/simple',
+    data: {location: location, keywords: keywords},
+    success: function(response){ drawMarkers(response.locations) }
+  })
 }
 
 function setMarkers(){
