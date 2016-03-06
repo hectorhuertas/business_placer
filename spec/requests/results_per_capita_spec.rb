@@ -15,7 +15,7 @@ RSpec.describe "Results per capita" do
       json = JSON.parse(response.body)
       expect(json.length).to eq(10)
       expect(json.first["name"]).to eq('Speer')
-      expect(json.last["name"]).to eq('Baker')
+      expect(json.last["name"]).to eq('Five Points')
     end
   end
 end
