@@ -3,7 +3,7 @@ require 'csv'
 desc "Import csv files"
 
 task import: [:environment] do
-  denver_id = City.find_by(name: 'Denver').id
+  denver_id = City.find_or_create_by(name: 'Denver').id
   file = "vendor/assets/csv/denver_population.csv"
   CSV.foreach(file, headers: true) do |row|
     data = {
