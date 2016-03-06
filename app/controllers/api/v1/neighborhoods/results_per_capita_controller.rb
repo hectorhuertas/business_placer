@@ -12,7 +12,7 @@ class Api::V1::Neighborhoods::ResultsPerCapitaController < Api::ApiController
         location: location,
         results_density: results[:total] / n.density
       }
-    end.sort_by {|neighborhood| neighborhood[:results_density]}.take(20)
+    end.sort_by {|neighborhood| neighborhood[:results_density]}.take(10)
     # b = {
     #   city: params[:location],
     #   location: "denver_coordinates",

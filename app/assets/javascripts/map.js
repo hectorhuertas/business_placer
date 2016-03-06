@@ -1,5 +1,6 @@
 var map
 var geocoder
+var markers = []
 function initMap() {
   var turing = {lat: 39.749, lng: -105.000}
   geocoder = new google.maps.Geocoder()
@@ -32,6 +33,7 @@ function placeIt(){
 
 function neighborhoodAnalysis(){
   recenterMap()
+  setMapOnAll(null)
   setRichMarkers()
   }
 
@@ -61,7 +63,7 @@ function addSideLink(neighborhood, index){
     (index + 1).toString() +
     '.- ' +
     neighborhood.name +
-    "</a>"
+    "</a><br><br>"
     // '<a id="action" class="btn btn-success" href="#">Action!</a>'
     // "<div class='post' data-id='" +
     // post.id +
@@ -75,16 +77,24 @@ function addSideLink(neighborhood, index){
   )
 }
 
+// Sets the map on all markers in the array.
+function setMapOnAll(map) {
+  for (var i = 0; i < markers.length; i++) {
+    markers[i].setMap(map);
+  }
+}
+
   function drawRichMarker(data, index){
     // debugger
     // data ={name: "University Park", location: "Denver University Park", results_density: 6.751412024626886e-7
     geocoder.geocode({ 'address': data.location }, function(results, status) {
        if (status == google.maps.GeocoderStatus.OK) {
-         new google.maps.Marker({
+         var marker = new google.maps.Marker({
            map: map,
            position: results[0].geometry.location,
            label: (index + 1).toString()
          })
+         markers.push(marker)
        }
      })
 
