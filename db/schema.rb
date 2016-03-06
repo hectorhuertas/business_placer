@@ -11,10 +11,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160302021800) do
+ActiveRecord::Schema.define(version: 20160305190657) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "citext"
+
+  create_table "cities", force: :cascade do |t|
+    t.citext   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "neighborhoods", force: :cascade do |t|
+    t.citext   "name"
+    t.float    "area"
+    t.integer  "population"
+    t.float    "density"
+    t.integer  "city_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "neighborhoods", ["city_id"], name: "index_neighborhoods_on_city_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email"
@@ -25,4 +44,5 @@ ActiveRecord::Schema.define(version: 20160302021800) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "neighborhoods", "cities"
 end
