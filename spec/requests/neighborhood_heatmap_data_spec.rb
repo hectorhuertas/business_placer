@@ -29,9 +29,22 @@ RSpec.describe "Neighborhood heatmap data" do
       expect(response).to have_http_status(200)
 
       json = JSON.parse(response.body)
-      # binding.pry
       expect(json.length).to eq(21)
-      # expect(json.first).to eq({"lat"=>39.6695512, "lng"=>-104.9409155})
+    end
+
+    it "displays the heatmap of a much denser neighborhood" do
+      user = User.create(name: "Peter")
+      allow_any_instance_of(Api::ApiController)
+        .to receive(:current_user)
+        .and_return(user)
+
+      #look for shoes at denver five points
+      get '/api/v1/neighborhoods/heatmap?location=((39.74375089999999, -105.00334199999998), (39.775386, -104.9731357))&keywords=shoes'
+      expect(response).to be_success
+      expect(response).to have_http_status(200)
+
+      json = JSON.parse(response.body)
+      expect(json.length).to eq(62)
     end
   end
 end

@@ -27,7 +27,7 @@ function analyseNeighborhoodDistribution(){
          action: 'GET',
          url: '/api/v1/neighborhoods/heatmap',
          data: {location: results[0].geometry.viewport.toString(), keywords: keywords},
-         success: function(response){ drawHeatmap(response) }
+         success: function(heatmapData){ drawHeatmap(heatmapData) }
        })
      }
    })

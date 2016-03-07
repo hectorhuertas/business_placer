@@ -1,5 +1,5 @@
 class ZoneScanner
-  attr_reader :finder, :zone
+  attr_reader :finder
 
   def initialize(location)
     @finder = FinderService.new
@@ -14,27 +14,17 @@ class ZoneScanner
   end
 
   def find_all(keywords)
-    search = finder.geo_search(keywords, zone)
-    if search[:total] >= 20
-      locations = Bounds.new(zone).quadrants.reduce([]) do |result, quadrant|
-        result << find_all_at( keywords: keywords, bounding_box: quadrant )
-        result
-      end
-      locations = locations.flatten.uniq
-    else
-      search[:locations]
-    end
+    find_all_at(keywords: keywords, bounding_box: @zone)
   end
 
   def find_all_at(keywords:, bounding_box:)
     search = finder.geo_search(keywords, bounding_box)
     if search[:total] >= 20
-      locations = Bounds.new(zone).quadrants.reduce([]) do |result, quadrant|
+      locations = Bounds.new(bounding_box).quadrants.reduce([]) do |result, quadrant|
         result << find_all_at( keywords: keywords, bounding_box: quadrant )
         result
       end
       locations = locations.flatten.uniq
-      megabob
     else
       search[:locations]
     end
