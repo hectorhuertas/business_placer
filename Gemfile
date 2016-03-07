@@ -16,7 +16,7 @@ gem "omniauth-google-oauth2"
 gem 'responders'
 gem 'yelp', require: 'yelp'
 gem 'simplecov'
-
+gem 'skylight'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

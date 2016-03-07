@@ -1,5 +1,4 @@
 var map, heatmap, geocoder
-// var geocoder
 var markers = []
 function initMap() {
   var turing = {lat: 39.749, lng: -105.000}
@@ -14,12 +13,36 @@ $(document).ready(function(){
   $('#action').on('click', placeIt)
 })
 
+function analyseNeighborhoodDistribution(){
+  var location = this.dataset.location
+  var keywords = $('#keywords').val()
+  var locations = []
+  clearMap()
+
+  geocoder.geocode({ 'address': location }, function(results, status) {
+     if (status == google.maps.GeocoderStatus.OK) {
+       map.setCenter(results[0].geometry.location);
+       map.fitBounds(results[0].geometry.viewport)
+       $.ajax({
+         action: 'GET',
+         url: '/api/v1/neighborhoods/heatmap',
+         data: {location: results[0].geometry.viewport.toString(), keywords: keywords},
+         success: function(heatmapData){ drawHeatmap(heatmapData) }
+       })
+     }
+   })
+}
+
+function clearMap(){
+  setMapOnAll(null)
+  if (heatmap) { heatmap.setMap(null) }
+}
+
 function placeIt(){
   var location = $('#location').val()
 
-  setMapOnAll(null)
+  clearMap()
   $('#marker-info').empty()
-  if (heatmap) { heatmap.setMap(null) }
 
   if (location == 'Denver'){
     neighborhoodAnalysis()
@@ -63,6 +86,8 @@ function setRichMarkers(){
         drawRichMarker(neighborhood, index)
         addSideLink(neighborhood, index)
       })
+
+      $('.neighborhood').on('click', analyseNeighborhoodDistribution)
     }
   })
 }
@@ -83,7 +108,9 @@ function drawRichMarker(data, index){
 
 function addSideLink(neighborhood, index){
   $('#marker-info').append(
-    "<a class='btn btn-success' href='#'>" +
+    "<a id='mono'class='neighborhood btn btn-success' data-location='" +
+    neighborhood.location +
+    "' href='#'>" +
     (index + 1).toString() + '.- ' + neighborhood.name +
     "</a><br><br>"
   )
@@ -117,6 +144,8 @@ function drawHeatmap(coordinates){
   // $.each(coordinates, function(index, coordinate){
   //   drawMarker(coordinate)
   // })
+  heatmap.set('dissipating', true)
+  heatmap.set('radius', 60)
 }
 
 // function drawMarker(coordinates){
