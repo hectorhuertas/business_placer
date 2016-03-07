@@ -10,7 +10,7 @@ function initMap() {
 }
 
 $(document).ready(function(){
-  $('#action').on('click', placeIt)
+  $('#place-it').on('click', placeIt)
 })
 
 function analyseNeighborhoodDistribution(){
@@ -21,7 +21,7 @@ function analyseNeighborhoodDistribution(){
 
   geocoder.geocode({ 'address': location }, function(results, status) {
      if (status == google.maps.GeocoderStatus.OK) {
-       map.setCenter(results[0].geometry.location);
+       map.setCenter(results[0].geometry.location)
        map.fitBounds(results[0].geometry.viewport)
        $.ajax({
          action: 'GET',
@@ -60,7 +60,7 @@ function recenterMap(){
   var location = $('#location').val()
   geocoder.geocode({ 'address': location }, function(results, status) {
      if (status == google.maps.GeocoderStatus.OK) {
-       map.setCenter(results[0].geometry.location);
+       map.setCenter(results[0].geometry.location)
        map.fitBounds(results[0].geometry.viewport)
      }
    })
@@ -88,6 +88,8 @@ function setRichMarkers(){
       })
 
       $('.neighborhood').on('click', analyseNeighborhoodDistribution)
+    }, error: function(xhr){
+      alert('Come back in 60 seconds')
     }
   })
 }

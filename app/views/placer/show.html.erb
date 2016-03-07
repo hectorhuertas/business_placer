@@ -1,13 +1,13 @@
-<br>
-<div class="container text-xs-center">
-<!-- <a id="spike" class="btn btn-success" href="#">Spike!</a> -->
-<a id="action" class="btn btn-success" href="#">Action!</a>
-</div>
-<br>
+<!-- <br>
 <div class="container">
-  <div class="card text-xs-center">
+<a id="spike" class="btn btn-success" href="#">Spike!</a>
+<a id="action" class="btn btn-success" href="#">Action!</a>
+</div> -->
+<br>
+<div class="">
+  <div class="card text-xs-center col-xs-10 col-xs-offset-1">
     <div class="card-block">
-      <form id="place-it" class="row" action="index.html" method="post" data-remote="true">
+      <form id="place-it-form" class="row" data-remote="true">
         <div class="col-xs-5">
           <div class="form-group row">
             <label for="keywords" class="col-xs-2 form-control-label">Place</label>
@@ -20,51 +20,33 @@
           <div class="form-group row">
             <label for="location" class="col-xs-1 form-control-label">at</label>
             <div class="col-xs-11">
-              <input type="text" class="form-control" id="location" placeholder="Location">
+              <input type="text" class="form-control" id="location" placeholder="Location" value="Denver">
             </div>
           </div>
         </div>
         <div class="col-xs-2">
           <!-- <a id="place-it" class="btn btn-success">Place It!</a> -->
-          <button id="pladdce-it" type="submit" class="btn btn-success">Place It!</button>
+          <button id="place-it" type="submit" class="btn btn-success">Place It!</button>
         </div>
       </form>
     </div>
   </div>
 </div>
 
-<div class="container">
+<div class="">
   <div class="row">
-    <div class="col-xs-9">
+    <div class="col-xs-7 col-xs-offset-1">
       <div class="card">
         <%= render "shared/map" %>
         <%#= image_tag "https://tctechcrunch2011.files.wordpress.com/2013/05/copy-of-sf-cards.png" , class:"img-fluid"%>
       </div>
     </div>
     <div class="col-xs-3">
-      <div class="card" style="min-height:500px">
+      <div class="card" style="min-height:660px">
         <div id="marker-info" class="card-block">
           Other Amazing Info
         </div>
       </div>
-    </div>
-  </div>
-</div>
-
-<div class="container">
-  <div class="card card-default">
-    <div class="card-block">
-      Individual info about each marker
-    </div>
-  </div>
-  <div class="card card-default">
-    <div class="card-block">
-      Individual info about each marker
-    </div>
-  </div>
-  <div class="card card-default">
-    <div class="card-block">
-      Individual info about each marker
     </div>
   </div>
 </div>
