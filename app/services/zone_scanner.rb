@@ -3,7 +3,7 @@ class ZoneScanner
 
   def initialize(location)
     @finder = FinderService.new
-# binding.pry
+
     location = location.gsub(/[(),]/,' ').split.map(&:to_f)
     @zone   = {
       sw_latitude: location[0] -0.0005,
@@ -28,11 +28,7 @@ class ZoneScanner
 
   def find_all_at(keywords:, bounding_box:)
     search = finder.geo_search(keywords, bounding_box)
-    # binding.pry
     if search[:total] >= 20
-      # Bounds.new(zone).quadrants.reduce([]) do |result, quadrant|
-      #   find_all_at( keywords: keywords, zone: quadrant )
-      # end
       locations = Bounds.new(zone).quadrants.reduce([]) do |result, quadrant|
         result << find_all_at( keywords: keywords, bounding_box: quadrant )
         result
