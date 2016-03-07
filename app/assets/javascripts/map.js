@@ -14,12 +14,96 @@ $(document).ready(function(){
   $('#action').on('click', placeIt)
 })
 
-function placeIt(){
-  var location = $('#location').val()
+function analyseNeighborhoodDistribution(){
+  var location = this.dataset.location
+  var keywords = $('#keywords').val()
+  var locations = []
+  clearMap()
 
+  geocoder.geocode({ 'address': location }, function(results, status) {
+     if (status == google.maps.GeocoderStatus.OK) {
+       map.setCenter(results[0].geometry.location);
+       map.fitBounds(results[0].geometry.viewport)
+       $.ajax({
+         action: 'GET',
+         url: '/api/v1/neighborhoods/heatmap',
+         data: {location: results[0].geometry.viewport.toString(), keywords: keywords},
+         success: function(response){
+          //  debugger
+          //  $.merge(locations, response.locations)
+          // //  debugger
+          //  $.ajax({
+          //    action: 'GET',
+          //    url: '/api/v1/neighborhoods/heatmap',
+          //    data: {bounds: results[0].geometry.viewport.toString(), keywords: keywords},
+          //   //  data: {location: results[0].geometry.viewport.toString(), keywords: keywords},
+          //   //  data: {location: this.dataset.location, keywords: keywords},
+          //    // success: function(response){ drawHeatmap(response.locations) }
+          //    success: function(response){
+          //      console.log('done')
+          //    }
+          //  })
+          //  console.log(results[0].geometry.viewport)
+
+
+          //  locations = $.unique( locations )
+           drawHeatmap(response)
+         }
+       })
+     }
+   })
+
+}
+// function analyseNeighborhoodDistribution(){
+//   var location = this.dataset.location
+//   var keywords = $('#keywords').val()
+//   var locations = []
+//   clearMap()
+//
+//   geocoder.geocode({ 'address': location }, function(results, status) {
+//      if (status == google.maps.GeocoderStatus.OK) {
+//        map.setCenter(results[0].geometry.location);
+//        map.fitBounds(results[0].geometry.viewport)
+//        $.ajax({
+//          action: 'GET',
+//          url: '/api/v1/search/simple',
+//          data: {location: location, keywords: keywords},
+//          success: function(response){
+//            $.merge(locations, response.locations)
+//            debugger
+//            $.ajax({
+//              action: 'GET',
+//              url: '/api/v1/neighborhoods/heatmap',
+//              data: {bounds: results[0].geometry.viewport.toString(), keywords: keywords},
+//             //  data: {location: results[0].geometry.viewport.toString(), keywords: keywords},
+//             //  data: {location: this.dataset.location, keywords: keywords},
+//              // success: function(response){ drawHeatmap(response.locations) }
+//              success: function(response){
+//                console.log('done')
+//              }
+//            })
+//            console.log(results[0].geometry.viewport)
+//
+//
+//            locations = $.unique( locations )
+//            drawHeatmap(locations)
+//          }
+//        })
+//      }
+//    })
+//
+// }
+
+function clearMap(){
   setMapOnAll(null)
   $('#marker-info').empty()
   if (heatmap) { heatmap.setMap(null) }
+}
+
+function placeIt(){
+  var location = $('#location').val()
+
+  clearMap()
 
   if (location == 'Denver'){
     neighborhoodAnalysis()
@@ -63,6 +147,8 @@ function setRichMarkers(){
         drawRichMarker(neighborhood, index)
         addSideLink(neighborhood, index)
       })
+
+      $('.neighborhood').on('click', analyseNeighborhoodDistribution)
     }
   })
 }
@@ -83,7 +169,9 @@ function drawRichMarker(data, index){
 
 function addSideLink(neighborhood, index){
   $('#marker-info').append(
-    "<a class='btn btn-success' href='#'>" +
+    "<a id='mono'class='neighborhood btn btn-success' data-location='" +
+    neighborhood.location +
+    "' href='#'>" +
     (index + 1).toString() + '.- ' + neighborhood.name +
     "</a><br><br>"
   )

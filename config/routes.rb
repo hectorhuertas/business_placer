@@ -8,12 +8,13 @@ Rails.application.routes.draw do
   namespace :api , defaults: {format: :json} do
     namespace :v1 do
       namespace :search do
-        get 'simple', to: "simple#index"
+        get '/simple', to: "simple#index"
       end
 
-      resources 'neighborhoods', only: [:index, :show] do
+      resources :neighborhoods, only: [:index, :show] do
         collection do
           get '/results_per_capita', to: "neighborhoods/results_per_capita#index"
+          get '/heatmap', to: "neighborhoods/heatmap#show"
         end
       end
 
