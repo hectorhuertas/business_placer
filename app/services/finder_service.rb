@@ -28,7 +28,7 @@ class FinderService
   def geo_search(keywords, bounding_box)
     Rails.cache.fetch("geo_search_#{keywords.split.join('_')}_at_#{bounding_box.to_s}", expires_in: 7.days) do
       search = client.search_by_bounding_box(bounding_box, { term: keywords})
-      locations = locations_from(search)
+      locations = locations_from(search).compact
 
       {
         total: search.total,
@@ -41,10 +41,12 @@ class FinderService
   private
     def locations_from(search)
       search.businesses.map do |business|
-       {
-         lat: business.location.coordinate.latitude,
-         lng: business.location.coordinate.longitude
-       }
+        if business.location.coordinate != nil
+         {
+           lat: business.location.coordinate.latitude,
+           lng: business.location.coordinate.longitude
+         }
+       end
       end
     end
 end

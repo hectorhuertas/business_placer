@@ -14,7 +14,7 @@ class ZoneScanner
   end
 
   def find_all(keywords)
-    find_all_at(keywords: keywords, bounding_box: @zone)
+    find_all_at(keywords: keywords, bounding_box: @zone).compact
   end
 
   def find_all_at(keywords:, bounding_box:)

@@ -144,6 +144,8 @@ function drawHeatmap(coordinates){
   // $.each(coordinates, function(index, coordinate){
   //   drawMarker(coordinate)
   // })
+  heatmap.set('dissipating', true)
+  heatmap.set('radius', 60)
 }
 
 // function drawMarker(coordinates){
