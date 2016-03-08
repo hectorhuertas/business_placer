@@ -44,7 +44,7 @@ RSpec.describe "Neighborhood heatmap data" do
       expect(response).to have_http_status(200)
 
       json = JSON.parse(response.body)
-      expect(json.length).to eq(64)
+      expect(json.length).to eq(45)
     end
   end
 end

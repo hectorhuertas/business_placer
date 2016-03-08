@@ -89,6 +89,7 @@ function setRichMarkers(){
 
       $('.neighborhood').on('click', analyseNeighborhoodDistribution)
     }, error: function(xhr){
+      debugger
       alert('Come back in 60 seconds')
     }
   })

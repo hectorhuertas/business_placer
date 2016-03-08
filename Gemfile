@@ -17,6 +17,7 @@ gem 'responders'
 gem 'yelp', require: 'yelp'
 gem 'simplecov'
 gem 'skylight'
+gem 'sidekiq'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
