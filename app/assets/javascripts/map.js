@@ -42,7 +42,6 @@ function placeIt(){
   var location = $('#location').val()
 
   clearMap()
-  $('#marker-info').empty()
 
   if (location == 'Denver'){
     neighborhoodAnalysis()
@@ -75,21 +74,23 @@ function setMapOnAll(map) {
 function setRichMarkers(){
   var location = $('#location').val()
   var keywords = $('#keywords').val()
-
   $.ajax({
     action: 'GET',
     url: '/api/v1/neighborhoods/results_per_capita?',
     data: {location: location, keywords: keywords},
-    success: function(neighborhoods){
+    success: function(response){
+      if (response.message == 'analyzing'){
+        alert('Come back in 60 seconds boy')
+      } else {
+        $('#marker-info').empty()
 
-      $.each(neighborhoods,function(index, neighborhood){
-        drawRichMarker(neighborhood, index)
-        addSideLink(neighborhood, index)
-      })
+        $.each(response,function(index, neighborhood){
+          drawRichMarker(neighborhood, index)
+          addSideLink(neighborhood, index)
+        })
 
-      $('.neighborhood').on('click', analyseNeighborhoodDistribution)
-    }, error: function(xhr){
-      alert('Come back in 60 seconds')
+        $('.neighborhood').on('click', analyseNeighborhoodDistribution)
+      }
     }
   })
 }
@@ -108,18 +109,9 @@ function drawRichMarker(data, index){
   })
 }
 
-// function addSideLink(neighborhood, index){
-//   $('#marker-info').append(
-//     "<a id='mono'class='neighborhood btn btn-success' data-location='" +
-//     neighborhood.location +
-//     "' href='#'>" +
-//     (index + 1).toString() + '.- ' + neighborhood.name +
-//     "</a><br><br>"
-//   )
-// }
 function addSideLink(neighborhood, index){
   $('#marker-info').append(
-      buttonFor(index, neighborhood.location, neighborhood.name)
+    buttonFor(index, neighborhood.location, neighborhood.name)
   )
 }
 
@@ -164,16 +156,6 @@ function drawHeatmap(coordinates){
       data: heatmapData,
       map: map
     });
-  // $.each(coordinates, function(index, coordinate){
-  //   drawMarker(coordinate)
-  // })
   heatmap.set('dissipating', true)
   heatmap.set('radius', 60)
 }
-
-// function drawMarker(coordinates){
-//   new google.maps.Marker({
-//     map: map,
-//     position: coordinates
-//   })
-// }

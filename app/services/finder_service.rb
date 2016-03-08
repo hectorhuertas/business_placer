@@ -13,7 +13,6 @@ class FinderService
 
   def search(keywords, location)
     Rails.cache.fetch("search_#{keywords.split.join('_')}_at_#{location.split.join('_')}", expires_in: 7.days) do
-
       search = client.search(location, { term: keywords })
       locations = locations_from(search)
 
