@@ -12,12 +12,8 @@ class FinderService
   end
 
   def search(keywords, location)
-    # binding.pry
-    # Rails.cache.fetch("search_#{keywords.split.join('_')}_at_#{location.split.join('_')}", expires_in: 7.days) do
+    Rails.cache.fetch("search_#{keywords.split.join('_')}_at_#{location.split.join('_')}", expires_in: 7.days) do
       search = client.search(location, { term: keywords })
-      # binding.pry
-      puts [keywords, location]
-      puts search
       locations = locations_from(search)
 
       {
@@ -25,7 +21,7 @@ class FinderService
         count: locations.count,
         locations: locations
       }
-    # end
+    end
   end
 
   def geo_search(keywords, bounding_box)

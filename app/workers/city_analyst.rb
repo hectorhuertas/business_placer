@@ -2,11 +2,10 @@ class CityAnalyst
   include Sidekiq::Worker
 
   def perform(cache_key, keywords, location)
-    puts "bob: #{location}"
+    finder = FinderService.new
       @neighborhoods = Neighborhood.all.map do |n|
-        finder = FinderService.new
         current_location = "#{location} #{n.name}"
-        puts current_location
+        puts "Analyzing #{keywords} at #{current_location}"
         results = finder.search(keywords, current_location)
 
         {

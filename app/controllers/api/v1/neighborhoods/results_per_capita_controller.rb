@@ -5,7 +5,7 @@ class Api::V1::Neighborhoods::ResultsPerCapitaController < Api::ApiController
       respond_with Rails.cache.read(cache_key)
     else
       CityAnalyst.perform_async(cache_key, params[:keywords], params[:location])
-      respond_with "analysis_started"
+      respond_with({message: "analyzing"})
     end
   end
 
