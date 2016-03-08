@@ -19,4 +19,4 @@
 /coverage
 
 # Ignore redis dump
-# /dump.rdb
+/dump.rdb
