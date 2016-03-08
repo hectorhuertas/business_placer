@@ -10,7 +10,7 @@ function initMap() {
 }
 
 $(document).ready(function(){
-  $('#action').on('click', placeIt)
+  $('#place-it').on('click', placeIt)
 })
 
 function analyseNeighborhoodDistribution(){
@@ -21,7 +21,7 @@ function analyseNeighborhoodDistribution(){
 
   geocoder.geocode({ 'address': location }, function(results, status) {
      if (status == google.maps.GeocoderStatus.OK) {
-       map.setCenter(results[0].geometry.location);
+       map.setCenter(results[0].geometry.location)
        map.fitBounds(results[0].geometry.viewport)
        $.ajax({
          action: 'GET',
@@ -60,7 +60,7 @@ function recenterMap(){
   var location = $('#location').val()
   geocoder.geocode({ 'address': location }, function(results, status) {
      if (status == google.maps.GeocoderStatus.OK) {
-       map.setCenter(results[0].geometry.location);
+       map.setCenter(results[0].geometry.location)
        map.fitBounds(results[0].geometry.viewport)
      }
    })
@@ -88,6 +88,8 @@ function setRichMarkers(){
       })
 
       $('.neighborhood').on('click', analyseNeighborhoodDistribution)
+    }, error: function(xhr){
+      alert('Come back in 60 seconds')
     }
   })
 }
@@ -106,14 +108,35 @@ function drawRichMarker(data, index){
   })
 }
 
+// function addSideLink(neighborhood, index){
+//   $('#marker-info').append(
+//     "<a id='mono'class='neighborhood btn btn-success' data-location='" +
+//     neighborhood.location +
+//     "' href='#'>" +
+//     (index + 1).toString() + '.- ' + neighborhood.name +
+//     "</a><br><br>"
+//   )
+// }
 function addSideLink(neighborhood, index){
   $('#marker-info').append(
-    "<a id='mono'class='neighborhood btn btn-success' data-location='" +
-    neighborhood.location +
-    "' href='#'>" +
-    (index + 1).toString() + '.- ' + neighborhood.name +
-    "</a><br><br>"
+      buttonFor(index, neighborhood.location, neighborhood.name)
   )
+}
+
+function buttonFor(index, location, name){
+  if (index == 0) {
+    return "<a id='mono'class='neighborhood btn btn-success' data-location='" +
+    location +
+    "' href='#' style='width: 100%'>" +
+    'A' + '.- ' + name +
+    "</a><br>"
+  } else {
+    return "<br><a id='mono'class='neighborhood btn btn-success' data-location='" +
+    location +
+    "' href='#' style='width: 100%'>" +
+    index + '.- ' + name +
+    "</a><br>"
+  }
 }
 
 function simpleSearch(){
