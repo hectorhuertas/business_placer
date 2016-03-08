@@ -108,14 +108,35 @@ function drawRichMarker(data, index){
   })
 }
 
+// function addSideLink(neighborhood, index){
+//   $('#marker-info').append(
+//     "<a id='mono'class='neighborhood btn btn-success' data-location='" +
+//     neighborhood.location +
+//     "' href='#'>" +
+//     (index + 1).toString() + '.- ' + neighborhood.name +
+//     "</a><br><br>"
+//   )
+// }
 function addSideLink(neighborhood, index){
   $('#marker-info').append(
-    "<a id='mono'class='neighborhood btn btn-success' data-location='" +
-    neighborhood.location +
-    "' href='#'>" +
-    (index + 1).toString() + '.- ' + neighborhood.name +
-    "</a><br><br>"
+      buttonFor(index, neighborhood.location, neighborhood.name)
   )
+}
+
+function buttonFor(index, location, name){
+  if (index == 0) {
+    return "<a id='mono'class='neighborhood btn btn-success' data-location='" +
+    location +
+    "' href='#' style='width: 100%'>" +
+    'A' + '.- ' + name +
+    "</a><br>"
+  } else {
+    return "<br><a id='mono'class='neighborhood btn btn-success' data-location='" +
+    location +
+    "' href='#' style='width: 100%'>" +
+    index + '.- ' + name +
+    "</a><br>"
+  }
 }
 
 function simpleSearch(){
