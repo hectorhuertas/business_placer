@@ -1,5 +1,5 @@
 class CityAnalyst
-attr_reader :keywords, :location, :finder
+attr_reader :keywords, :location, :finder, :neighborhood
 
   def initialize(keywords, location)
     @keywords = keywords
@@ -28,6 +28,12 @@ attr_reader :keywords, :location, :finder
   end
 
   def heatmap_of(neighborhood)
+    @neighborhood = neighborhood
+
+    load_heatmap || queue_heatmap
+  end
+
+  def heatmap_from_viewport(neighborhood)
     viewport = viewport_of(neighborhood)
     ZoneScanner.new(viewport).find_all(keywords)
   end
@@ -66,11 +72,24 @@ attr_reader :keywords, :location, :finder
     end
 
     def cache_key
-      "results_for_#{keywords.split.join('_')}_at_#{location}"
+      "analysis_for_#{keywords.split.join('_')}_at_#{location}"
     end
 
     def load_cache
       Rails.cache.read(cache_key)
+    end
+
+    def load_heatmap
+      Rails.cache.read(heatmap_cache_key)
+    end
+
+    def heatmap_cache_key
+      "heatmap_for_#{keywords.split.join('_')}_at_#{location}_#{neighborhood.split.join}"
+    end
+
+    def queue_heatmap
+      # HeatmapWorker.perform_async(keywords, location)
+      {message: "calculating_heatmap"}
     end
 
     def queue_analysis
