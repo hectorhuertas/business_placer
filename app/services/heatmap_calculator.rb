@@ -2,10 +2,10 @@ class HeatmapCalculator
   attr_reader :keywords, :location, :finder, :neighborhood
 
   def initialize(keywords, location, neighborhood)
-    @keywords = keywords
-    @location = location
+    @keywords     = keywords
+    @location     = location
     @neighborhood = neighborhood
-    @finder = FinderService.new
+    @finder       = FinderService.new
   end
 
   def run
@@ -13,10 +13,10 @@ class HeatmapCalculator
   end
 
   def viewport
-    google = "https://maps.googleapis.com/maps/api/geocode/json?"
+    google  = "https://maps.googleapis.com/maps/api/geocode/json?"
     address = "address=#{location}+#{parametrize(neighborhood)}"
-    key = "&key=#{ENV['MAPS_API_KEY']}"
-    url = google+address+key
+    key     = "&key=#{ENV['MAPS_API_KEY']}"
+    url     = google+address+key
 
     result = JSON.parse(Faraday.get(url).body)["results"][0]
     result['geometry']['viewport']

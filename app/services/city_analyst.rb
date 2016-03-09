@@ -4,7 +4,7 @@ class CityAnalyst
   def initialize(keywords, location)
     @keywords = keywords
     @location = location
-    @finder = FinderService.new
+    @finder   = FinderService.new
   end
 
   def run
@@ -31,7 +31,7 @@ class CityAnalyst
 
     def queue_analysis
       CityAnalystWorker.perform_async(keywords, location)
-      {message: "analyzing"}
+      { message: "analyzing" }
     end
 
     def analyze_neighborhoods

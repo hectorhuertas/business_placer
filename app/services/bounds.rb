@@ -26,9 +26,9 @@ class Bounds
 
   def new_box(sw_latitude, sw_longitude, ne_latitude, ne_longitude)
     {
-      sw_latitude: sw_latitude,
+      sw_latitude:   sw_latitude,
       sw_longitude: sw_longitude,
-      ne_latitude: ne_latitude,
+      ne_latitude:   ne_latitude,
       ne_longitude: ne_longitude
     }
   end

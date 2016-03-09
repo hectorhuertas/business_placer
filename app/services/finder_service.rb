@@ -4,16 +4,15 @@ class FinderService
   attr_reader :client
 
   def initialize
-    @client = Yelp::Client.new({ consumer_key: ENV['YELP_CONSUMER_KEY'],
+    @client = Yelp::Client.new({ consumer_key:    ENV['YELP_CONSUMER_KEY'],
                                  consumer_secret: ENV['YELP_CONSUMER_SECRET'],
-                                 token: ENV['YELP_TOKEN'],
-                                 token_secret: ENV['YELP_TOKEN_SECRET']
-                               })
+                                 token:           ENV['YELP_TOKEN'],
+                                 token_secret:    ENV['YELP_TOKEN_SECRET'] })
   end
 
   def search(keywords, location)
-    Rails.cache.fetch("search_#{keywords.split.join('_')}_at_#{location.split.join('_')}", expires_in: 7.days) do
-      search = client.search(location, { term: keywords })
+    # Rails.cache.fetch("search_#{keywords.split.join('_')}_at_#{location.split.join('_')}", expires_in: 7.days) do
+      search    = client.search(location, { term: keywords })
       locations = locations_from(search)
 
       {
@@ -21,12 +20,12 @@ class FinderService
         count: locations.count,
         locations: locations
       }
-    end
+    # end
   end
 
   def geo_search(keywords, bounding_box)
-    Rails.cache.fetch("geo_search_#{keywords.split.join('_')}_at_#{bounding_box.to_s}", expires_in: 7.days) do
-      search = client.search_by_bounding_box(bounding_box, { term: keywords})
+    # Rails.cache.fetch("geo_search_#{keywords.split.join('_')}_at_#{bounding_box.to_s}", expires_in: 7.days) do
+      search    = client.search_by_bounding_box(bounding_box, { term: keywords})
       locations = locations_from(search).compact
 
       {
@@ -34,7 +33,7 @@ class FinderService
         count: locations.count,
         locations: locations
       }
-    end
+    # end
   end
 
   private
