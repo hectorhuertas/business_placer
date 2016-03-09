@@ -16,8 +16,12 @@ RSpec.describe CityAnalystWorker do
       expect(cache.first).to eq(first_nbhd)
       expect(cache.last).to eq(last_nbhd)
 
-      university = Rails.cache.read("??????")
-      #assert cache exists for city and heatmap
+      country_club = Rails.cache.read("heatmap_for_mexican_at_Denver_Country Club")
+
+      cc_heatmap = [ {:lat=>39.7178830006016, :lng=>-104.958904380676},
+                     {:lat=>39.7116212546825, :lng=>-104.973333254457},
+                     {:lat=>39.721241,        :lng=>-104.95858} ]
+      expect(country_club).to eq(cc_heatmap)
     end
   end
 end

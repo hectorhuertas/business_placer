@@ -9,7 +9,7 @@ class HeatmapCalculator
   end
 
   def run
-    load_cache || calculate_heatmap
+    Rails.cache.fetch(cache_key){ calculate_heatmap }
   end
 
   def viewport
@@ -23,10 +23,6 @@ class HeatmapCalculator
   end
 
   private
-    def load_cache
-      Rails.cache.read(cache_key)
-    end
-
     def cache_key
       "heatmap_for_#{keywords.split.join('_')}_at_#{location}_#{neighborhood}"
     end
