@@ -8,11 +8,7 @@ attr_reader :keywords, :location, :finder
   end
 
   def run
-    load_cache || start_analysis
-  end
-
-  def bob
-
+    load_cache || queue_analysis
   end
 
   def analyze
@@ -28,9 +24,48 @@ attr_reader :keywords, :location, :finder
       }
     end.sort_by {|neighborhood| neighborhood[:results_density]}.take(10)
     Rails.cache.write(cache_key, @neighborhoods, expires_in: 7.days)
+    # @neighborhoods
+  end
+
+  def heatmap_of(neighborhood)
+    viewport_of(neighborhood)
+    # ZoneScanner.new(string_location).find_all(keywords)
+    # url = "https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyDofWGkiRsM6CEp4yNX1wNMFuypbGKzIiE"
+  end
+
+  def viewport_of(neighborhood)
+    google = "https://maps.googleapis.com/maps/api/geocode/json?"
+    address = "address=#{location}+#{parametrize(neighborhood)}"
+    key = "&key=#{ENV['MAPS_API_KEY']}"
+    url = google+address+key
+
+    result = JSON.parse(Faraday.get(url).body)["results"][0]
+    result['geometry']['viewport']
+  end
+
+  def parametrize(neighborhood)
+    neighborhood.gsub("/", " ").split.join('+')
+  end
+
+  def best_neighborhoods
+    best_of(analyze_neighborhoods)
   end
 
   private
+    def analyze_neighborhoods
+      Neighborhood.all.map do |n|
+        current_location = "#{location} #{n.name}"
+        results = finder.search(keywords, current_location)
+        { name: n.name,
+          location: current_location,
+          results_density: results[:total] / n.density }
+      end
+    end
+
+    def best_of(neighborhoods)
+      neighborhoods.sort_by {|ngbh| ngbh[:results_density]}.take(10)
+    end
+
     def cache_key
       "results_for_#{keywords.split.join('_')}_at_#{location}"
     end
@@ -39,13 +74,8 @@ attr_reader :keywords, :location, :finder
       Rails.cache.read(cache_key)
     end
 
-    def start_analysis
+    def queue_analysis
       CityAnalystWorker.perform_async(keywords, location)
       {message: "analyzing"}
     end
-    #
-    # def start_analysis
-    #   CityAnalystWorker.perform_async(cache_key, keywords, location)
-    #   {message: "analyzing"}
-    # end
 end

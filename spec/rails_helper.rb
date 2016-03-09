@@ -17,7 +17,10 @@ OmniAuth.config.mock_auth[:google_oauth2] = OmniAuth::AuthHash.new({
   }
 })
 
-
+VCR.configure do |c|
+  c.cassette_library_dir = 'spec/cassettes'
+  c.hook_into :webmock
+end
 
 # Add additional requires below this line. Rails is not loaded until this point!
 
