@@ -20,3 +20,6 @@
 
 # Ignore redis dump
 /dump.rdb
+
+# Ignore VCR cassettes
+/spec/cassettes
