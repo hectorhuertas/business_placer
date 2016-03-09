@@ -2,6 +2,9 @@ class CityAnalystWorker
   include Sidekiq::Worker
 
   def perform(keywords, location)
-    CityAnalyst.new(keywords, location).analyze_city
+    @neighborhoods = CityAnalyst.new(keywords, location).analyze_city
+    @neighborhoods.each do |nbhd|
+      HeatmapCalculator.new(keywords, location, nbhd[:name]).run
+    end
   end
 end

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe CityAnalyst do
   it "return the 10 most suitable neighborhoods" do
-    VCR.use_cassette 'mexican_denver' do
+    VCR.use_cassette 'best_neighborhoods_mexican_denver' do
       nbhds = CityAnalyst.new('mexican', 'Denver').best_neighborhoods
 
       expect(nbhds.size).to eq(10)

@@ -4,7 +4,6 @@ class ZoneScanner
   def initialize(location)
     @finder = FinderService.new
 
-    # location = location.gsub(/[(),]/,' ').split.map(&:to_f)
     @zone   = {
       sw_latitude:  location['southwest']['lat'] -0.0005,
       sw_longitude: location['southwest']['lng'] -0.0005,
@@ -22,7 +21,6 @@ class ZoneScanner
     if search[:total] >= 20
       locations = Bounds.new(bounding_box).quadrants.reduce([]) do |result, quadrant|
         result << find_all_at( keywords: keywords, bounding_box: quadrant )
-        result
       end
       locations = locations.flatten.uniq
     else
