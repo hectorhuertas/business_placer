@@ -18,7 +18,6 @@ function analyseNeighborhoodDistribution(){
   var keywords = $('#keywords').val()
   var locations = []
   clearMap()
-
   geocoder.geocode({ 'address': location }, function(results, status) {
      if (status == google.maps.GeocoderStatus.OK) {
        map.setCenter(results[0].geometry.location)
@@ -26,12 +25,32 @@ function analyseNeighborhoodDistribution(){
        $.ajax({
          action: 'GET',
          url: '/api/v1/neighborhoods/heatmap',
-         data: {location: results[0].geometry.viewport.toString(), keywords: keywords},
+         data: {location: location, keywords: keywords},
          success: function(heatmapData){ drawHeatmap(heatmapData) }
        })
      }
    })
 }
+
+// function analyseNeighborhoodDistribution(){
+//   var location = this.dataset.location
+//   var keywords = $('#keywords').val()
+//   var locations = []
+//   clearMap()
+//
+//   geocoder.geocode({ 'address': location }, function(results, status) {
+//      if (status == google.maps.GeocoderStatus.OK) {
+//        map.setCenter(results[0].geometry.location)
+//        map.fitBounds(results[0].geometry.viewport)
+//        $.ajax({
+//          action: 'GET',
+//          url: '/api/v1/neighborhoods/heatmap',
+//          data: {location: results[0].geometry.viewport.toString(), keywords: keywords},
+//          success: function(heatmapData){ drawHeatmap(heatmapData) }
+//        })
+//      }
+//    })
+// }
 
 function clearMap(){
   setMapOnAll(null)

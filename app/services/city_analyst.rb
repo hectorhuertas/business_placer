@@ -1,5 +1,5 @@
 class CityAnalyst
-attr_reader :keywords, :location, :finder, :neighborhood
+attr_reader :keywords, :location, :finder, :neighborhoo
 
   def initialize(keywords, location)
     @keywords = keywords
@@ -11,21 +11,27 @@ attr_reader :keywords, :location, :finder, :neighborhood
     load_cache || queue_analysis
   end
 
-  def analyze
-    @neighborhoods = Neighborhood.all.map do |n|
-      current_location = "#{location} #{n.name}"
-      puts "Analyzing #{keywords} at #{current_location}"
-      results = finder.search(keywords, current_location)
-
-      {
-        name: n.name,
-        location: current_location,
-        results_density: results[:total] / n.density
-      }
-    end.sort_by {|neighborhood| neighborhood[:results_density]}.take(10)
+  def analyze_city
+    @neighborhoods = best_neighborhoods
     Rails.cache.write(cache_key, @neighborhoods, expires_in: 7.days)
     # @neighborhoods
   end
+  # def analyze_city
+  #   binding.pry
+  #   @neighborhoods = Neighborhood.all.map do |n|
+  #     current_location = "#{location} #{n.name}"
+  #     puts "Analyzing #{keywords} at #{current_location}"
+  #     results = finder.search(keywords, current_location)
+  #
+  #     {
+  #       name: n.name,
+  #       location: current_location,
+  #       results_density: results[:total] / n.density
+  #     }
+  #   end.sort_by {|neighborhood| neighborhood[:results_density]}.take(10)
+  #   Rails.cache.write(cache_key, @neighborhoods, expires_in: 7.days)
+  #   # @neighborhoods
+  # end
 
   def heatmap_of(neighborhood)
     @neighborhood = neighborhood
