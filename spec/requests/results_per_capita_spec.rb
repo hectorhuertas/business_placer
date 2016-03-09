@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "Results per capita" do
   describe "Make a search" do
     it "returns the 20 neighborhoods with lower density of business" do
-      pending
+      pending "im bob"
       user = User.create(name: "Peter")
       allow_any_instance_of(Api::ApiController)
         .to receive(:current_user)

@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe "Simple search" do
   describe "search by keywords and location" do
     it "returns the simple search data" do
+      pending
       user = User.create(name: "Peter")
       allow_any_instance_of(Api::ApiController)
         .to receive(:current_user)

@@ -4,12 +4,12 @@ class ZoneScanner
   def initialize(location)
     @finder = FinderService.new
 
-    location = location.gsub(/[(),]/,' ').split.map(&:to_f)
+    # location = location.gsub(/[(),]/,' ').split.map(&:to_f)
     @zone   = {
-      sw_latitude: location[0] -0.0005,
-      sw_longitude: location[1] -0.0005,
-      ne_latitude: location[2] +0.0005,
-      ne_longitude: location[3] +0.0005
+      sw_latitude:  location['southwest']['lat'] -0.0005,
+      sw_longitude: location['southwest']['lng'] -0.0005,
+      ne_latitude:  location['northeast']['lat'] +0.0005,
+      ne_longitude: location['northeast']['lng'] +0.0005
     }
   end
 

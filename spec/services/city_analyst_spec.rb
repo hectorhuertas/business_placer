@@ -36,20 +36,18 @@ RSpec.describe CityAnalyst do
     #   end
     # end
 
-    # it "returns the heatmapData of the neighborhood" do
-    #   VCR.use_cassette 'mexican_denver_speer' do
-    #     speer_location = "((39.70697284426492, -105.00044543825072), (39.73140014407822, -104.95911796174926))"
-    #     speer = CityAnalyst.new('mexican', 'Denver').heatmap_of('Speer')
-    #     sp2 = ZoneScanner.new(speer_location).find_all('mexican')
-    #
-    #     expect(speer).to eq(sp2)
-    #     # binding.pry
-    #   end
-    # end
+    it "returns the heatmapData of the neighborhood" do
+      VCR.use_cassette 'heatmap_mexican_denver_speer' do
+        speer = CityAnalyst.new('mexican', 'Denver').heatmap_of('Speer')
+
+        expect(speer.size).to eq(26)
+        expect(speer.first).to eq({:lat=>39.725409, :lng=>-104.978013})
+      end
+    end
 
     it "returns the viewport of the neighborhood" do
       VCR.use_cassette 'speer_viewport' do
-        viewport = CityAnalyst.new('mexican', 'Denver').heatmap_of('Speer')
+        viewport = CityAnalyst.new('mexican', 'Denver').viewport_of('Speer')
         expected = {"northeast"=>{"lat"=>39.7272871, "lng"=>-104.9718263},
                     "southwest"=>{"lat"=>39.7110871, "lng"=>-104.9877371}}
         expect(viewport).to eq(expected)

@@ -28,9 +28,8 @@ attr_reader :keywords, :location, :finder
   end
 
   def heatmap_of(neighborhood)
-    viewport_of(neighborhood)
-    # ZoneScanner.new(string_location).find_all(keywords)
-    # url = "https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyDofWGkiRsM6CEp4yNX1wNMFuypbGKzIiE"
+    viewport = viewport_of(neighborhood)
+    ZoneScanner.new(viewport).find_all(keywords)
   end
 
   def viewport_of(neighborhood)

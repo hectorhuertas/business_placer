@@ -7,15 +7,26 @@ Rails.application.routes.draw do
 
   namespace :api , defaults: {format: :json} do
     namespace :v1 do
+      namespace :analyst do
+        get "city", to: "city#index"
+      end
+
+
       namespace :search do
         get '/simple', to: "simple#index"
       end
 
-      resources :neighborhoods, only: [:index, :show] do
+      resources :neighborhoods, only: [] do
         collection do
           get '/results_per_capita', to: "neighborhoods/results_per_capita#index"
           get '/heatmap', to: "neighborhoods/heatmap#show"
         end
+      end
+
+      resources :cities, only: [] do
+        "/cities/analyst/"
+        "/analyst/heatmap#show"
+        "/analyst/city#index (ciudad)"
       end
 
       #Order of things:
