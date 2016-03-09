@@ -14,18 +14,20 @@ $(document).ready(function(){
 })
 
 function analyseNeighborhoodDistribution(){
-  var location = this.dataset.location
+  var city = $('#location').val()
+  var neighborhood = this.dataset.location
+  var address = city + ' ' + neighborhood
   var keywords = $('#keywords').val()
   var locations = []
   clearMap()
-  geocoder.geocode({ 'address': location }, function(results, status) {
+  geocoder.geocode({ 'address': address }, function(results, status) {
      if (status == google.maps.GeocoderStatus.OK) {
        map.setCenter(results[0].geometry.location)
        map.fitBounds(results[0].geometry.viewport)
        $.ajax({
          action: 'GET',
-         url: '/api/v1/neighborhoods/heatmap',
-         data: {location: location, keywords: keywords},
+         url: '/api/v1/analyst/heatmap',
+         data: {keywords: keywords, city: city, neighborhood: neighborhood},
          success: function(heatmapData){ drawHeatmap(heatmapData) }
        })
      }
@@ -136,14 +138,18 @@ function addSideLink(neighborhood, index){
 
 function buttonFor(index, location, name){
   if (index == 0) {
-    return "<a id='mono'class='neighborhood btn btn-success' data-location='" +
-    location +
+    return "<a id='" +
+    name +
+    "'class='neighborhood btn btn-success' data-location='" +
+    name +
     "' href='#' style='width: 100%'>" +
     'A' + '.- ' + name +
     "</a><br>"
   } else {
-    return "<br><a id='mono'class='neighborhood btn btn-success' data-location='" +
-    location +
+    return "<br><a id='" +
+    name +
+    "'class='neighborhood btn btn-success' data-location='" +
+    name +
     "' href='#' style='width: 100%'>" +
     index + '.- ' + name +
     "</a><br>"

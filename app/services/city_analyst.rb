@@ -1,7 +1,7 @@
 class CityAnalyst
-attr_reader :keywords, :location, :finder, :neighborhoo
+attr_reader :keywords, :location, :finder, :neighborhood
 
-  def initialize(keywords, location)
+  def initialize(keywords, location, neighborhood = nil)
     @keywords = keywords
     @location = location
     @finder = FinderService.new
@@ -35,11 +35,14 @@ attr_reader :keywords, :location, :finder, :neighborhoo
 
   def heatmap_of(neighborhood)
     @neighborhood = neighborhood
-
-    load_heatmap || queue_heatmap
+    load_heatmap || calculate_heatmap
   end
 
-  def heatmap_from_viewport(neighborhood)
+  def calculate_heatmap
+    heatmap_from(neighborhood)
+  end
+
+  def heatmap_from(neighborhood)
     viewport = viewport_of(neighborhood)
     ZoneScanner.new(viewport).find_all(keywords)
   end
@@ -54,8 +57,8 @@ attr_reader :keywords, :location, :finder, :neighborhoo
     result['geometry']['viewport']
   end
 
-  def parametrize(neighborhood)
-    neighborhood.gsub("/", " ").split.join('+')
+  def parametrize(neighborhood_name)
+    neighborhood_name.gsub("/", " ").split.join('+')
   end
 
   def best_neighborhoods
@@ -90,7 +93,7 @@ attr_reader :keywords, :location, :finder, :neighborhoo
     end
 
     def heatmap_cache_key
-      "heatmap_for_#{keywords.split.join('_')}_at_#{location}_#{neighborhood.split.join}"
+      "heatmap_for_#{keywords.split.join('_')}_at_#{location}_#{neighborhood}"
     end
 
     def queue_heatmap
