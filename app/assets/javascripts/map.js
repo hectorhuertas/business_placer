@@ -76,7 +76,7 @@ function setRichMarkers(){
   var keywords = $('#keywords').val()
   $.ajax({
     action: 'GET',
-    url: '/api/v1/neighborhoods/results_per_capita?',
+    url: '/api/v1/analyst/city?',
     data: {location: location, keywords: keywords},
     success: function(response){
       if (response.message == 'analyzing'){
