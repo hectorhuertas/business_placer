@@ -12,16 +12,8 @@ Rails.application.routes.draw do
         get "heatmap", to: "heatmap#show"
       end
 
-
       namespace :search do
         get '/simple', to: "simple#index"
-      end
-
-      resources :neighborhoods, only: [] do
-        collection do
-          get '/results_per_capita', to: "neighborhoods/results_per_capita#index"
-          get '/heatmap', to: "neighborhoods/heatmap#show"
-        end
       end
     end
   end
