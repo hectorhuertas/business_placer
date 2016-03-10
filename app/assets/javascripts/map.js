@@ -101,7 +101,7 @@ function setRichMarkers(){
     data: {location: location, keywords: keywords},
     success: function(response){
       if (response.message == 'analyzing'){
-        alert('Come back in 60 seconds boy')
+        waiter()
       } else {
         $('#marker-info').empty()
 
@@ -154,6 +154,10 @@ function buttonFor(index, location, name){
     index + '.- ' + name +
     "</a><br>"
   }
+}
+
+function waiter(){
+  $('#waiter').modal('show')
 }
 
 function simpleSearch(){
