@@ -1,4 +1,4 @@
-var map, heatmap, geocoder
+var map, heatmap, geocoder, checker
 var markers = []
 function initMap() {
   var turing = {lat: 39.749, lng: -105.000}
@@ -19,7 +19,7 @@ function analyseNeighborhoodDistribution(){
   var address = city + ' ' + neighborhood
   var keywords = $('#keywords').val()
   var locations = []
-  // clearMap()
+  clearMap()
   geocoder.geocode({ 'address': address }, function(results, status) {
      if (status == google.maps.GeocoderStatus.OK) {
        map.setCenter(results[0].geometry.location)
@@ -107,17 +107,22 @@ function setRichMarkers(){
       if (response.message == 'analyzing'){
         waiter()
       } else {
-        $('#marker-info').empty()
-
-        $.each(response,function(index, neighborhood){
-          drawRichMarker(neighborhood, index)
-          addSideLink(neighborhood, index)
-        })
-
-        $('.neighborhood').on('click', analyseNeighborhoodDistribution)
+        drawMarkers(response)
       }
     }
   })
+}
+
+function drawMarkers(response){
+  $('#marker-info').empty()
+
+  $.each(response,function(index, neighborhood){
+    drawRichMarker(neighborhood, index)
+    addSideLink(neighborhood, index)
+  })
+
+  $('.neighborhood').on('click', analyseNeighborhoodDistribution)
+
 }
 
 function waiter(){
@@ -127,14 +132,34 @@ function waiter(){
   })
   $('#waiter').modal('show')
   $('#leave').on('click',function(){
+    clearInterval(checker)
     // alert('boom!')
   })
-  start_counter()
+  counter()
+  checker()
   // #keep making calls every 10 seconds until it is ready
   // setInterval(function(){ alert("Hello") }, 3000)
 }
 
-function start_counter(){
+function checker(){
+  checker = setInterval(function(){
+    var location = $('#location').val()
+    var keywords = $('#keywords').val()
+    console.log('checker!')
+    // $.ajax({
+    //   action: 'GET',
+    //   url: '/api/v1/checker',
+    //   data: {location: location, keywords: keywords},
+    //   success: function(response){
+    //     if (response != 'analyzing') {
+    //       drawMarkers(response)
+    //     }
+    //   }
+    // })
+  }, 1000)
+}
+
+function counter(){
   var counter = setInterval(function(){
     var current = Number($('#progress').text())
     if (current == 99) { clearInterval(counter) }
