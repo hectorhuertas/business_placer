@@ -8,9 +8,11 @@ Rails.application.routes.draw do
   namespace :api , defaults: {format: :json} do
     namespace :v1 do
       namespace :analyst do
-        get "city", to: "city#index"
-        get "heatmap", to: "heatmap#show"
+        get "/city", to: "city#index"
+        get "/heatmap", to: "heatmap#show"
       end
+
+      get '/checker', to: 'checker#show'
 
       namespace :search do
         get '/simple', to: "simple#index"

@@ -12,8 +12,15 @@ class CityAnalyst
   end
 
   def analyze_city
-    @nbhds = best_neighborhoods
-    Rails.cache.write(cache_key, @nbhds, expires_in: 7.days) && @nbhds
+    Rails.cache.fetch(cache_key, expires_in: 7.days) do
+      best_neighborhoods
+    end
+    # @nbhds = best_neighborhoods
+    # Rails.cache.write(cache_key, @nbhds, expires_in: 7.days) && @nbhds
+  end
+
+  def check_analysis
+    load_cache || { message: "not ready"}
   end
 
   def best_neighborhoods

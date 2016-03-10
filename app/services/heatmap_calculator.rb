@@ -28,6 +28,7 @@ class HeatmapCalculator
     end
 
     def calculate_heatmap
+      # binding.pry
       ZoneScanner.new(viewport).find_all(keywords)
     end
 

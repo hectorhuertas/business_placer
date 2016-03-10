@@ -1,4 +1,4 @@
-var map, heatmap, geocoder, checker
+var map, heatmap, geocoder, currentChecker
 var markers = []
 function initMap() {
   var turing = {lat: 39.749, lng: -105.000}
@@ -24,12 +24,14 @@ function analyseNeighborhoodDistribution(){
      if (status == google.maps.GeocoderStatus.OK) {
        map.setCenter(results[0].geometry.location)
        map.fitBounds(results[0].geometry.viewport)
-       $.ajax({
-         action: 'GET',
-         url: '/api/v1/analyst/heatmap',
-         data: {keywords: keywords, city: city, neighborhood: neighborhood},
-         success: function(heatmapData){ drawHeatmap(heatmapData) }
-       })
+        setTimeout(function(){
+          $.ajax({
+            action: 'GET',
+            url: '/api/v1/analyst/heatmap',
+            data: {keywords: keywords, city: city, neighborhood: neighborhood},
+            success: function(heatmapData){ drawHeatmap(heatmapData) }
+          })
+       }, 20)
      }
    })
 }
@@ -132,8 +134,7 @@ function waiter(){
   })
   $('#waiter').modal('show')
   $('#leave').on('click',function(){
-    clearInterval(checker)
-    // alert('boom!')
+    clearInterval(currentChecker)
   })
   counter()
   checker()
@@ -142,24 +143,30 @@ function waiter(){
 }
 
 function checker(){
-  checker = setInterval(function(){
+  currentChecker = setInterval(function(){
     var location = $('#location').val()
     var keywords = $('#keywords').val()
     console.log('checker!')
-    // $.ajax({
-    //   action: 'GET',
-    //   url: '/api/v1/checker',
-    //   data: {location: location, keywords: keywords},
-    //   success: function(response){
-    //     if (response != 'analyzing') {
-    //       drawMarkers(response)
-    //     }
-    //   }
-    // })
-  }, 1000)
+    $.ajax({
+      action: 'GET',
+      url: '/api/v1/checker',
+      data: {location: location, keywords: keywords},
+      success: function(response){
+        if (response.message == 'not ready') {
+        } else {
+          drawMarkers(response)
+          clearInterval(currentChecker)
+          $('#waiter').modal('hide')
+// 2016-03-10T03:23:23.818Z 33808 TID-ouii071fw CityAnalystWorker JID-eb5
+// 54ebcb5f0aa31
+        }
+      }
+    })
+  }, 10000)
 }
 
 function counter(){
+  $('#progress').text(0)
   var counter = setInterval(function(){
     var current = Number($('#progress').text())
     if (current == 99) { clearInterval(counter) }

@@ -18,6 +18,7 @@ class ZoneScanner
 
   def find_all_at(keywords:, bounding_box:)
     search = finder.geo_search(keywords, bounding_box)
+    # binding.pry
     if search[:total] >= 20
       locations = Bounds.new(bounding_box).quadrants.reduce([]) do |result, quadrant|
         result << find_all_at( keywords: keywords, bounding_box: quadrant )
