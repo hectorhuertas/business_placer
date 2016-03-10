@@ -19,7 +19,7 @@ function analyseNeighborhoodDistribution(){
   var address = city + ' ' + neighborhood
   var keywords = $('#keywords').val()
   var locations = []
-  clearMap()
+  // clearMap()
   geocoder.geocode({ 'address': address }, function(results, status) {
      if (status == google.maps.GeocoderStatus.OK) {
        map.setCenter(results[0].geometry.location)
@@ -60,6 +60,10 @@ function clearMap(){
 }
 
 function placeIt(){
+  // if the search term (eg "mexican") is the same as the prev one,
+  // just return and
+
+
   var location = $('#location').val()
 
   clearMap()
@@ -101,7 +105,7 @@ function setRichMarkers(){
     data: {location: location, keywords: keywords},
     success: function(response){
       if (response.message == 'analyzing'){
-        alert('Come back in 60 seconds boy')
+        waiter()
       } else {
         $('#marker-info').empty()
 
@@ -114,6 +118,28 @@ function setRichMarkers(){
       }
     }
   })
+}
+
+function waiter(){
+  $('#waiter').modal({
+    backdrop: 'static',
+    keyboard: false
+  })
+  $('#waiter').modal('show')
+  $('#leave').on('click',function(){
+    // alert('boom!')
+  })
+  start_counter()
+  // #keep making calls every 10 seconds until it is ready
+  // setInterval(function(){ alert("Hello") }, 3000)
+}
+
+function start_counter(){
+  var counter = setInterval(function(){
+    var current = Number($('#progress').text())
+    if (current == 99) { clearInterval(counter) }
+    $('#progress').text(current + 1)
+  }, 700)
 }
 
 function drawRichMarker(data, index){

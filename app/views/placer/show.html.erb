@@ -7,7 +7,7 @@
           <div class="form-group row">
             <label for="keywords" class="col-xs-2 form-control-label">Place</label>
             <div class="col-xs-10">
-              <input type="text" class="form-control" id="keywords" placeholder="Business Type">
+              <input type="text" class="form-control" id="keywords" placeholder="Business Type" autofocus>
             </div>
           </div>
         </div>
@@ -15,7 +15,7 @@
           <div class="form-group row">
             <label for="location" class="col-xs-1 form-control-label">at</label>
             <div class="col-xs-11">
-              <input type="text" class="form-control" id="location" placeholder="Location" value="Denver">
+              <input type="text" class="form-control" id="location" placeholder="Location" value="Denver" disabled>
             </div>
           </div>
         </div>
@@ -47,6 +47,68 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="waiter" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document" style="width:85%">
+    <div class="modal-content">
+      <div class="modal-header">
+        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
+        <h4 class="modal-title display-4 text-xs-center" id="myModalLabel">
+          <%= image_tag "488_g.gif" %>
+          Analyzing the city... <span id="progress">0</span><span>%</span>
+          <%= image_tag "488_g.gif" %>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-6 text-xs-center">
+              <br>
+              <br>
+              <br>
+              <h4>We show you the most suitable neighborhoods</h4>
+              <br>
+              <h4>Click on them to see a closer analysis</h4>
+              <br>
+              <h4>We pick based on population and competition</h4>
+            </div>
+            <div class="col-xs-6">
+              <%= image_tag "neighborhoods.png", class:"img-fluid center-block", style:"height:300px" %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="modal-body">
+        <div class="container">
+
+          <div class="row">
+            <div class="col-xs-6">
+              <%= image_tag "heatmap.png", class:"img-fluid img-rounded center-block", style:"height:300px" %>
+            </div>
+            <div class="col-xs-6 text-xs-center">
+              <br>
+              <br>
+              <br>
+              <br>
+              <h4>Heat means rival businesses</h4>
+              <br>
+              <h4>Pick a building in the areas without heat</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer text-xs-center">
+        <button id="leave" type="button" class="btn btn-success" data-dismiss="modal">Leave it working in the back and make a new search</button>
+        <p>*Enter the search later to see the analysis results</p>
       </div>
     </div>
   </div>
