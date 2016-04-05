@@ -30,7 +30,9 @@ class CityAnalyst
     end
 
     def queue_analysis
-      CityAnalystWorker.perform_async(keywords, location)
+      # binding.pry
+      CityAnalystWorker.perform(keywords, location)
+      # CityAnalystWorker.perform_async(keywords, location)
       { message: "analyzing" }
     end
 
