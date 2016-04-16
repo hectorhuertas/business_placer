@@ -16,6 +16,8 @@ It combines population and existing businesses data to pick the 10 neighborhoods
 
 ## Instructions
 
+  0. Login with a Google Account.
+
   1. Enter a place and a location (* Currently Denver is the only city with population data).
 
   2. If the search was never done, an instructions page is shown while the server does all the calculations.
@@ -28,7 +30,8 @@ It combines population and existing businesses data to pick the 10 neighborhoods
 
 ## TO DO
 
-  * Improve the interface so the user can use the website without referring to these instructions.
+  * Improve the interface so the user can use the website intuitively, without referring to these instructions.
+  * Add other cities population data.
 
 ## Special code features
 
